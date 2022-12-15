@@ -1,5 +1,9 @@
 name: Django CI
 
+env:
+  NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
 on:
   push:
     branches: [ "master" ]
@@ -27,4 +31,5 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
+        cd pressfeed
         python manage.py test
