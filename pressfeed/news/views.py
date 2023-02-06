@@ -13,7 +13,7 @@ def home(request):
     #                                                           language='en',
     #                                                           country='ie')
 
-    irish_news_request = requests.get(f'https://newsapi.org/v2/top-headlines?country=ie&apiKey={env("NEWSAPI_KEY")}')
-    newsapi_response = json.loads(irish_news_request.content)
+    # irish_news_request = requests.get(f'https://newsapi.org/v2/top-headlines?country=ie&apiKey={env("NEWSAPI_KEY")}')
+    # newsapi_response = json.loads(irish_news_request.content)
 
-    return render(request, 'home.html', {'api': newsapi_response})
+    return render(request, 'home.html')

@@ -4,6 +4,7 @@ Django settings for pressfeed project.
 """
 
 from pathlib import Path
+from .celery import app as celery_app
 import environ
 env = environ.Env()
 environ.Env.read_env()
