@@ -4,10 +4,22 @@ Django settings for pressfeed project.
 """
 
 from pathlib import Path
-from .celery import app as celery_app
+
 import environ
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
 env = environ.Env()
 environ.Env.read_env()
+
+#Init Google Cloud Firestore database credentials
+cred = credentials.ApplicationDefault()
+firebase_admin.initialize_app(cred, {
+    'projectId': 'lunar-inn-370414'
+})
+
+db = firestore.client()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pressfeed',
     'news',
 ]
 
