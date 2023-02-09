@@ -7,5 +7,6 @@ class Article(models.Model):
     description = models.TextField()
     url = models.URLField()
     published_at = models.DateTimeField()
+    image_url = models.URLField
 
 
