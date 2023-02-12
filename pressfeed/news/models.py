@@ -9,8 +9,8 @@ class Source(models.Model):
     def __str__(self):
         return self.name
 
-#Articles model
-class Articles(models.Model):
+#Article model
+class Article(models.Model):
     title = models.CharField(max_length=500)
     description = models.TextField()
     url = models.URLField(max_length=2048)

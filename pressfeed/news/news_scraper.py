@@ -2,7 +2,7 @@ import requests
 import json
 import environ
 from .models import Source
-from .models import Articles
+from .models import Article
 
 # from google.cloud import firestore
 
@@ -32,7 +32,7 @@ def store_news(news_data):
                 name=article['source']['name']
             )
 
-            Articles.objects.create(
+            Article.objects.create(
                 title=article['title'],
                 description=article['description'],
                 url=article['url'],

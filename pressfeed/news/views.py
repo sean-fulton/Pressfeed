@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Articles
+from .models import Article
 import environ
 import requests
 import json
@@ -17,5 +17,5 @@ def home(request):
     # irish_news_request = requests.get(f'https://newsapi.org/v2/top-headlines?country=ie&apiKey={env("NEWSAPI_KEY")}')
     # newsapi_response = json.loads(irish_news_request.content)
 
-    article = Articles.objects.all()
-    return render(request, 'home.html', {'article': article})
+    articles = Article.objects.all()
+    return render(request, 'home.html', {'articles': articles})
