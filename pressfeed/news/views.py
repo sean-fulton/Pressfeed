@@ -1,13 +1,14 @@
 from django.shortcuts import render
-from newsapi import NewsApiClient
+from .models import Articles
 import environ
+import requests
+import json
+
 
 env = environ.Env()
 environ.Env.read_env()
 
 def home(request):
-    import requests
-    import json
 
     # top_irish_christmas_headlines = newsapi.get_top_headlines(q='Christmas',
     #                                                           language='en',
@@ -16,4 +17,5 @@ def home(request):
     # irish_news_request = requests.get(f'https://newsapi.org/v2/top-headlines?country=ie&apiKey={env("NEWSAPI_KEY")}')
     # newsapi_response = json.loads(irish_news_request.content)
 
-    return render(request, 'home.html')
+    article = Articles.objects.all()
+    return render(request, 'home.html', {'article': article})

@@ -1,16 +1,21 @@
 import requests
 import json
 import environ
-from google.cloud import firestore
+from .models import Source
+from .models import Articles
 
-db = firestore.Client()
+# from google.cloud import firestore
+
+# db = firestore.Client()
 
 env = environ.Env()
 environ.Env.read_env()
 
+
 def update_news():
     news_data = retrieve_news()
     store_news(news_data)
+
 
 def retrieve_news():
     # Call NewsAPI v2 endpoint to scrape News data
@@ -19,17 +24,20 @@ def retrieve_news():
     if response.status_code == 200:
         return response.json()
 
+
 def store_news(news_data):
     for article in news_data['articles']:
-        news_ref = db.collection(u'news').document()
-        news_ref.set({
-            u'title': article['title'],
-            u'description': article['description'],
-            u'url': article['url'],
-            u'published_at': article['publishedAt'],
-            u'source': {
-                u'id': article['source']['id'],
-                u'name': article['source']['name']
-            },
-            u'thumbnail': article['urlToImage']
-        })
+        if (article['title'] is not None) and (article['description'] is not None) and (article['url'] is not None):
+            source, created = Source.objects.get_or_create(
+                name=article['source']['name']
+            )
+
+            Articles.objects.create(
+                title=article['title'],
+                description=article['description'],
+                url=article['url'],
+                published_at=article['publishedAt'],
+                source=source,
+                thumbnail_url=article['urlToImage']
+            )
+
