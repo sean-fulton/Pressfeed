@@ -9,9 +9,6 @@ media
 # Backup files # 
 *.bak 
 
-# Google #
-lunar-inn-370414-be3e97ae611c.json
-
 # If you are using PyCharm # 
 # User-specific stuff
 .idea/**/workspace.xml
