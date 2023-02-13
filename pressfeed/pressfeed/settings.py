@@ -7,6 +7,7 @@ from pathlib import Path
 
 import dj_database_url
 import environ
+import os
 
 # import firebase_admin
 # from firebase_admin import credentials
@@ -87,32 +88,6 @@ WSGI_APPLICATION = 'pressfeed.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    # SQLite3
-
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-
-    # remote postgresql
-
-    # 'default': {
-    #     'default': dj_database_url.parse(env('DATABASE_URL'), conn_max_age=600),
-    # }
-
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-
-
-
-    }
-}
 
 if os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
@@ -123,6 +98,33 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'PASSWORD': 'postgres',
             'HOST': '127.0.0.1',
             'PORT': '5432',
+        }
+    }
+else:
+    DATABASES = {
+        # SQLite3
+
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.sqlite3',
+        #     'NAME': BASE_DIR / 'db.sqlite3',
+        # }
+
+        # remote postgresql
+
+        # 'default': {
+        #     'default': dj_database_url.parse(env('DATABASE_URL'), conn_max_age=600),
+        # }
+
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': env('DB_PASSWORD'),
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+
+
+
         }
     }
 
