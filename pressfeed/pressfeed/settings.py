@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'pressfeed',
     'news',
-    'authentication'
+    'authentication',
 ]
 
 MIDDLEWARE = [
