@@ -11,6 +11,10 @@ environ.Env.read_env()
 
 def home(request):
 
+    return render(request, 'home.html', {})
+
+def testfeed(request):
+
     # use NewsAPI call to fetch article data
     #
     # start = time.time()
@@ -18,10 +22,10 @@ def home(request):
     # newsapi_response = json.loads(irish_news_request.content)
     # end = time.time()
     # print(f'TIME TO CALL API: {end - start}')
-    # return render(request, 'home.html', {'api': newsapi_response})
+    # return render(request, 'testfeed.html', {'api': newsapi_response})
 
     #use PostgreSQL Article model to fetch article data
 
     articles = Article.objects.all()
 
-    return render(request, 'home.html', {'articles': articles})
+    return render(request, 'testfeed.html', {'articles': articles})

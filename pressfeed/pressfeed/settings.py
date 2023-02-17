@@ -6,6 +6,7 @@ Django settings for pressfeed project.
 from pathlib import Path
 
 import dj_database_url
+import django.db
 import environ
 import os
 
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'pressfeed',
     'news',
+    'authentication'
 ]
 
 MIDDLEWARE = [
@@ -114,7 +116,6 @@ else:
         # 'default': {
         #     'default': dj_database_url.parse(env('DATABASE_URL'), conn_max_age=600),
         # }
-
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'postgres',
@@ -122,9 +123,6 @@ else:
             'PASSWORD': env('DB_PASSWORD'),
             'HOST': '127.0.0.1',
             'PORT': '5432',
-
-
-
         }
     }
 

@@ -9,6 +9,7 @@ environ.Env.read_env()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('news.urls')),
+    path('', include('authentication.urls')),
 ]
 
 if env('DEBUG') == 'True':
