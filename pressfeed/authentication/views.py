@@ -1,26 +1,27 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from pressfeed.forms import RegisterUserForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
 import requests
 
 
 def register_user(request):
-    form = UserCreationForm()
+    if request.method == "POST":
+        form = RegisterUserForm(request.POST)
 
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            messages.success(request, ("Registration successful"))
+            messages.success(request, ('Registered Successfully'))
             return redirect('home')
-        else:
-            form = CreationFormForm()
+    else:
+        form = RegisterUserForm()
+
     return render(request, 'accounts/register.html', {'form': form})
 
 
