@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 import environ
 import debug_toolbar
 
@@ -15,3 +16,5 @@ urlpatterns = [
 
 if env('DEBUG') == 'True':
     urlpatterns += [path(r'^__debug__/', include(debug_toolbar.urls)),]
+
+urlpatterns += staticfiles_urlpatterns()
