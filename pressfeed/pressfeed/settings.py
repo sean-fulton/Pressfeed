@@ -127,6 +127,12 @@ else:
     }
 
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+STATIC_URL = 'static/'
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
