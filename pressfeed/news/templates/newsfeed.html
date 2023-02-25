@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ user.get_username }}'s Pressfeed</h2>
+
+<div class="container">
+    <div class="row">
+        {% for article in articles %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card" style="height: 380px;">
+                {% load static %}
+                <img class="card-img-top" src="{{ article.thumbnail_url }}" style="height: 150px; object-fit: cover;" onerror="this.onerror=null; this.src='{% static 'err-splash.jpg' %}'">
+                <div class="card-body d-flex flex-column" style="height: 100%;">
+                    <h5 class="card-title">{{ article.title|truncatewords:10 }}</h5>
+                    <p> {{article.source}} </p>
+                    <p> {{ article.published_at }} </p>
+                    <div class="mt-auto">
+                        <a href="{{ article.url }}" target="_blank" class="btn btn-primary">Read more</a>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

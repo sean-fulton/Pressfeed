@@ -38,7 +38,6 @@ def subscribe(request):
     user_sources = request.user.sources.all()
     return render(request, 'subscribe.html', {'sources': sources, 'user_sources': user_sources})
 
-
 def testfeed(request):
     # use NewsAPI call to fetch article data
     # start = time.time()
@@ -51,3 +50,11 @@ def testfeed(request):
     # use PostgreSQL Article model to fetch article data
     articles = Article.objects.order_by('-published_at')
     return render(request, 'testfeed.html', {'articles': articles})
+
+@login_required
+def newsfeed(request):
+    user = request.user
+    sources = user.sources.all()
+    articles = Article.objects.filter(source__in=sources).order_by('-published_at')
+    return render(request, 'newsfeed.html', {'articles': articles})
+
