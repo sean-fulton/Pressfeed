@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Subscribe to Sources{% endblock %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">Your subscribed to news sources:</div>
+          <div class="card-body">
+            <form method="post" class="form" id="subscription-form" style="height: 500px; overflow-y: scroll;">
+              {% csrf_token %}
+              {% for source in sources %}
+                <div class="form-check">
+                  <input class="form-check-input custom-checkbox" type="checkbox" name="{{ source.name }}" id="{{ source.name }}"
+                    {% if source in user_sources %}
+                      checked
+                    {% endif %}
+                  >
+                  <label class="form-check-label" for="{{ source.name }}">
+                    {{ source.name }}
+                  </label>
+                </div>
+              {% endfor %}
+            </form>
+            <button type="button" class="btn btn-primary mt-3" id="update-button">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% load static %} <script src="{% static 'button.js' %}"></script>
+{% endblock %}

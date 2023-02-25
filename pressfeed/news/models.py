@@ -1,11 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 #Source of articles model
 class Source(models.Model):
     name = models.CharField(max_length=200, unique=True, primary_key=True)
+    subscribers = models.ManyToManyField(User, related_name='sources')
 
     def __str__(self):
         return self.name
