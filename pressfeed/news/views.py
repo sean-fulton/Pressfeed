@@ -32,6 +32,7 @@ def subscribe(request):
             elif request.POST.get(source.name) == None:
                     source.subscribers.remove(request.user)
 
+        messages.success(request, "You have updated your subscriptions!")
         return redirect('subscribe')
 
     # If no form submitted, show user's subscribed sources

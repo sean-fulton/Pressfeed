@@ -3,8 +3,6 @@
 {% block content %}
 <!-- PostgreSQL -->
 
-<h2>{{ user.get_username }}'s Pressfeed</h2>
-
 <div class="container">
     <div class="row">
         {% for article in articles %}
@@ -18,7 +16,7 @@
 <!--                    {% endif %}-->
                     <p> {{ article.published_at }} </p>
                     <div class="mt-auto">
-                        <a href="{{ article.url }}" target="_blank" class="btn btn-primary">Read more</a>
+                        <a href="{{ article.url }}" target="_blank" class="btn">Read more</a>
                     </div>
                 </div>
             </div>

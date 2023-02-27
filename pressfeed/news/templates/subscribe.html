@@ -12,19 +12,19 @@
             <form method="post" class="form" id="subscription-form" style="height: 500px; overflow-y: scroll;">
               {% csrf_token %}
               {% for source in sources %}
-                <div class="form-check">
+                <div class="form-check" id="form-box">
                   <input class="form-check-input custom-checkbox" type="checkbox" name="{{ source.name }}" id="{{ source.name }}"
                     {% if source in user_sources %}
                       checked
                     {% endif %}
                   >
-                  <label class="form-check-label" for="{{ source.name }}">
+                  <label class="form-check-label sub-input-label" for="{{source.name}}">
                     {{ source.name }}
                   </label>
                 </div>
               {% endfor %}
             </form>
-            <button type="button" class="btn btn-primary mt-3" id="update-button">Update</button>
+            <button type="button" class="btn mt-3" id="update-button">Update</button>
           </div>
         </div>
       </div>
