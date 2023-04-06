@@ -6,7 +6,7 @@ import time
 def start_scheduler():
     def run_scheduler():
         # Schedule update_news every 4 hours
-        schedule.every(10).seconds.do(update_news)
+        schedule.every(4).hours.do(update_news)
 
         while True:
             schedule.run_pending()
