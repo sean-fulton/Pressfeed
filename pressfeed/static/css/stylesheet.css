@@ -8,6 +8,10 @@
     outline: none !important;
 }
 
+a {
+    text-decoration-color: white;
+}
+
 .btn:hover, .btn:active {
     color: white;
     background-color: #3F4045;

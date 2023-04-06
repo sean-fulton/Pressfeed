@@ -3,6 +3,7 @@ import json
 import environ
 from .models import Source
 from .models import Article
+from django.db.utils import IntegrityError
 
 # from google.cloud import firestore
 
@@ -28,16 +29,21 @@ def retrieve_news():
 def store_news(news_data):
     for article in news_data['articles']:
         if (article['title'] is not None) and (article['description'] is not None) and (article['url'] is not None):
-            source, created = Source.objects.get_or_create(
-                name=article['source']['name']
-            )
+            try:
 
-            Article.objects.create(
-                title=article['title'],
-                description=article['description'],
-                url=article['url'],
-                published_at=article['publishedAt'],
-                source=source,
-                thumbnail_url=article['urlToImage']
-            )
+                source, created = Source.objects.get_or_create(
+                    name=article['source']['name']
+                )
+
+                article_obj, created = Article.objects.get_or_create(
+                    title=article['title'],
+                    description=article['description'],
+                    url=article['url'],
+                    published_at=article['publishedAt'],
+                    source=source,
+                    thumbnail_url=article['urlToImage']
+                )
+            except IntegrityError:
+                # Ignore duplicate article entries
+                pass
 

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Subscribe to Sources{% endblock %}
 
@@ -13,7 +14,7 @@
               {% csrf_token %}
               {% for source in sources %}
                 <div class="form-check" id="form-box">
-                  <input class="form-check-input custom-checkbox" type="checkbox" name="{{ source.name }}" id="{{ source.name }}"
+                  <input class="form-check-input custom-checkbox" type="checkbox" name="{{ source.name }}" id="{{ source.id }}"
                     {% if source in user_sources %}
                       checked
                     {% endif %}
@@ -25,11 +26,13 @@
               {% endfor %}
             </form>
             <button type="button" class="btn mt-3" id="update-button">Update</button>
+            <button type="button" class="btn mt-3" id="select-all-button">Select All</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-{% load static %} <script src="{% static 'button.js' %}"></script>
+<script src="{% static 'update_sub_button.js' %}"></script>
+<script src="{% static 'select_all_button.js'%}"></script>
 {% endblock %}
