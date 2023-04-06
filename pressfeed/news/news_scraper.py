@@ -5,10 +5,6 @@ from .models import Source
 from .models import Article
 from django.db.utils import IntegrityError
 
-# from google.cloud import firestore
-
-# db = firestore.Client()
-
 env = environ.Env()
 environ.Env.read_env()
 
@@ -16,6 +12,7 @@ environ.Env.read_env()
 def update_news():
     news_data = retrieve_news()
     store_news(news_data)
+    print("Updated News!")
 
 
 def retrieve_news():
