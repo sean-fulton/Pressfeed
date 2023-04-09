@@ -5,27 +5,26 @@ from .models import Source
 from .models import Article
 from django.db.utils import IntegrityError
 
-# from google.cloud import firestore
-
-# db = firestore.Client()
-
 env = environ.Env()
 environ.Env.read_env()
 
-
+# Simple method to encapsulate the logic of both retieve news and store news to be called by the scheduler / managment command
 def update_news():
-    news_data = retrieve_news()
-    store_news(news_data)
+    irish_news_data = retrieve_news('ie')
+    store_news(irish_news_data)
 
+    us_news_data = retrieve_news('us')
+    store_news(us_news_data)
+    print("Updated News!")
 
-def retrieve_news():
-    # Call NewsAPI v2 endpoint to scrape News data
-    response = requests.get(f'https://newsapi.org/v2/top-headlines?country=ie&apiKey={env("NEWSAPI_KEY")}')
+# Calls NewsAPI top-headlines endpoint to scrape news data based on the country param
+def retrieve_news(country):
+    response = requests.get(f'https://newsapi.org/v2/top-headlines?country={country}&apiKey={env("NEWSAPI_KEY")}')
     # verify request success
     if response.status_code == 200:
         return response.json()
 
-
+# Persists news data from a json object to the article and source models
 def store_news(news_data):
     for article in news_data['articles']:
         if (article['title'] is not None) and (article['description'] is not None) and (article['url'] is not None):
