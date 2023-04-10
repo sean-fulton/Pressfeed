@@ -16,7 +16,10 @@ def update_news():
 
     us_news_data = retrieve_news('us')
     store_news(us_news_data)
-    print("Updated News!")
+
+    now = datetime.datetime.now()
+    formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
+    print("Updated News at " + formatted_date)
 
 # Calls NewsAPI top-headlines endpoint to scrape news data based on the country param
 def retrieve_news(country):
