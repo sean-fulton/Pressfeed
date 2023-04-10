@@ -11,3 +11,7 @@ class NewsConfig(AppConfig):
         if os.environ.get('RUN_MAIN'):
             from .tasks import start_scheduler
             start_scheduler()
+
+            from .news_scraper import update_news
+            update_news()
+
