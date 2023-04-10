@@ -10,20 +10,8 @@ import django.db
 import environ
 import os
 
-# import firebase_admin
-# from firebase_admin import credentials
-# from firebase_admin import firestore
-
 env = environ.Env()
-environ.Env.read_env()
-
-# Init Google Cloud Firestore database credentials
-# cred = credentials.ApplicationDefault()
-# firebase_admin.initialize_app(cred, {
-#     'projectId': 'lunar-inn-370414'
-# })
-#
-# db = firestore.client()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -102,20 +90,20 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'PORT': '5432',
         }
     }
+elif os.environ.get('FLY_APP_NAME'):
+    # Use Fly.io Postgresql database config
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('FLY_PG_APP_NAME'),
+            'USER': os.getenv('FLY_PG_USERNAME'),
+            'PASSWORD': os.getenv('FLY_PG_PASSWORD'),
+            'HOST': os.getenv('FLY_PG_HOST'),
+            'PORT': os.getenv('FLY_PG_PORT'),
+        }
+    }
 else:
     DATABASES = {
-        # SQLite3
-
-        # 'default': {
-        #     'ENGINE': 'django.db.backends.sqlite3',
-        #     'NAME': BASE_DIR / 'db.sqlite3',
-        # }
-
-        # remote postgresql
-
-        # 'default': {
-        #     'default': dj_database_url.parse(env('DATABASE_URL'), conn_max_age=600),
-        # }
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
             'NAME': 'postgres',

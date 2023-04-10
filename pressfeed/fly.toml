@@ -1,12 +1,23 @@
-# fly.toml file generated for pressfeed on 2023-02-11T21:20:27Z
+# fly.toml file generated for pressfeed on 2023-04-09T22:14:47+01:00
 
 app = "pressfeed"
 kill_signal = "SIGINT"
 kill_timeout = 5
+primary_region = "lhr"
 processes = []
+
+[deploy]
+  release_command = "python manage.py migrate"
 
 [env]
   PORT = "8000"
+  FLY_APP_NAME = 'pressfeed'
+  FLY_PG_APP_NAME = 'pressfeed'
+  FLY_PG_USERNAME = 'postgres'
+  FLY_PG_PASSWORD = 'p7Ea5n3LeSNrsvM'
+  FLY_PG_HOST = 'pressfeed-db.internal'
+  FLY_PG_PORT = '5432'
+  DATABASE_URL = 'postgres://postgres:p7Ea5n3LeSNrsvM@pressfeed-db.flycast:5432'
 
 [experimental]
   auto_rollback = true
@@ -37,5 +48,6 @@ processes = []
     restart_limit = 0
     timeout = "2s"
 
-  [deploy]
-    release_command = "sh release.sh"
+[[statics]]
+  guest_path = "/code/static"
+  url_prefix = "/static/"
