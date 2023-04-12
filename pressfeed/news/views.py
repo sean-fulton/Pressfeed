@@ -44,6 +44,7 @@ def testfeed(request):
     # return render(request, 'testfeed.html', {'api': newsapi_response})
 
     # use PostgreSQL Article model to fetch article data
+
     articles = Article.objects.order_by('-published_at')
     return render(request, 'testfeed.html', {'articles': articles})
 
