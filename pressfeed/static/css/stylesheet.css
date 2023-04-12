@@ -46,6 +46,12 @@ a {
     transform-origin: bottom left;
 }
 
+.custom-toggler {
+    color: white !important;
+    border-color: #00A896 !important;
+    background-color: #00A896;
+}
+
 .dropdown-item:hover {
     color: white;
     background-color: #00A896;
