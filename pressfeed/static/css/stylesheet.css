@@ -19,9 +19,9 @@ a {
 }
 
 .navbar-brand {
-  display: inline-block;
-  position: relative;
-  color: white;
+    display: inline-block;
+    position: relative;
+    color: white;
 }
 
 .navbar-brand:hover {
@@ -29,21 +29,21 @@ a {
 }
 
 .navbar-brand:after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #00A896;
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #00A896;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
 }
 
 .navbar-brand:hover:after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+    transform: scaleX(1);
+    transform-origin: bottom left;
 }
 
 .dropdown-item:hover {
@@ -62,4 +62,29 @@ a {
 #no-subs-header, #feed-header {
     margin-bottom: 20px;
     text-align: center;
+}
+
+#get-started-btn a {
+    color: white;
+    text-decoration: none;
+}
+
+/* login */
+
+#login-header {
+    text-align: center;
+}
+
+/* footer */
+
+#footer {
+    text-align: center;
+    left: 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+#footer a {
+    text-decoration: none;
 }

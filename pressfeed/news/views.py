@@ -11,11 +11,6 @@ import time
 env = environ.Env()
 environ.Env.read_env()
 
-
-def home(request):
-    return render(request, 'home.html', {})
-
-
 @login_required
 def subscribe(request):
     sources = Source.objects.all()
