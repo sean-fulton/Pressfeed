@@ -75,17 +75,26 @@ a {
     text-decoration: none;
 }
 
-/* login */
+/* login / register headers */
 
-#login-header {
+#login-header, #register-header {
     text-align: center;
 }
 
 /* homepage */
 
-#home-news-phone {
+#homepage-images {
     height: 256px;
     width: 256px;
+}
+
+#news-card h3 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#sample-news-cards {
+    margin-bottom: 20px;
 }
 
 /* footer */

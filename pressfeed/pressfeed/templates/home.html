@@ -11,21 +11,45 @@
         <h3>Pressfeed is for you!</h3>
     </div>
     <div class="col-lg-4 d-flex justify-content-center">
-        <img class="img-fluid" id="home-news-phone" src='{% static 'img/news.png' %}'>
+        <img class="img-fluid" id="homepage-images" src='{% static 'img/news.png' %}'>
     </div>
 </div>
 <br/>
 <div class="row" id="middle-card">
     <div class="col-lg-4 d-flex justify-content-center order-2 order-md-1 text-center">
-         <img class="img-fluid" id="home-news-phone" src='{% static 'img/web-chat.png' %}'>
+        <img class="img-fluid" id="homepage-images" src='{% static 'img/web-chat.png' %}'>
     </div>
     <div class="col-lg-7 my-auto me-2 order-1 order-md-2">
         <h1> Direct Messaging </h1>
         <br/>
         <h4>Start sharing articles and chatting with other Pressfeed users. </h4>
+        <button class="btn" id="get-started-btn"><a href="/register">Get Started!</a></button>
     </div>
 </div>
+<br/>
+<div class="row" id="news-card">
+    <h3>Here's a sample of some of the news you could be seeing with Pressfeed</h3>
+    {% for article in articles %}
+    <div class="col-sm d-flex justify-content-center" id="sample-news-cards">
+        <div class="card" style="width: 18rem; height: 380px;">
+            {% load static %}
+            <img class="card-img-top" src="{{ article.thumbnail_url }}" style="height: 150px; object-fit: cover;"
+                 onerror="this.onerror=null; this.src='{% static 'img/err-splash.jpg' %}'">
+            <div class="card-body d-flex flex-column" style="height: 100%;">
+                <h5 class="card-title">{{ article.title|truncatewords:10 }}</h5>
+                <p> {{article.source}} </p>
+                <p class="mt-auto" id="article-date"> {{ article.published_at }} </p>
+                <div class="mt-auto">
+                    <a href="{{ article.url }}" target="_blank" class="btn">Read more</a>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    {% endfor %}
+</div>
+<br/>
 
-<p style="text-align: center"> Images courtesy of <a target="_blank" href="https://www.flaticon.com/free-stickers/news">Flaticon.com</a>
+<p style="text-align: center"> Icons courtesy of <a target="_blank" href="https://www.flaticon.com/free-stickers/news">Flaticon.com</a>
 </p>
 {% endblock %}
