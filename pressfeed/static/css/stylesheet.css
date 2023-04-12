@@ -75,6 +75,13 @@ a {
     text-align: center;
 }
 
+/* homepage */
+
+#home-news-phone {
+    height: 256px;
+    width: 256px;
+}
+
 /* footer */
 
 #footer {
