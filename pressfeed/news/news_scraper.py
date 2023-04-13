@@ -17,6 +17,9 @@ def update_news():
     us_news_data = retrieve_news('us')
     store_news(us_news_data)
 
+    uk_news_data = retrieve_news('gb')
+    store_news(uk_news_data)
+
     now = datetime.datetime.now()
     formatted_date = now.strftime("%Y-%m-%d %H:%M:%S")
     print("Updated News at " + formatted_date)
