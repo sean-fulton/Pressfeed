@@ -20,3 +20,13 @@ if env('DEBUG') == 'True':
     urlpatterns += [path(r'^__debug__/', include(debug_toolbar.urls)), ]
 
 urlpatterns += staticfiles_urlpatterns()
+
+def startup_news_updater():
+    from news.tasks import start_scheduler
+    start_scheduler()
+
+    from news.news_scraper import update_news
+    update_news()
+
+startup_news_updater()
+
