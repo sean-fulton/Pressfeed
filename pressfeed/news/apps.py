@@ -8,7 +8,7 @@ class NewsConfig(AppConfig):
 
     # I have created this ready function to ensure my scheduler from news/tasks.py is started when the news app has
     def ready(self):
-        if (os.environ.get('RUN_MAIN')):
+        if (os.environ.get('RUN_MAIN') == 'true'):
             from .tasks import start_scheduler
             start_scheduler()
 
