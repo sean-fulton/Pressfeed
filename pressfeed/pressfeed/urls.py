@@ -1,3 +1,4 @@
+import time
 from django.contrib import admin
 from . import views
 from django.urls import path, include
@@ -24,9 +25,6 @@ urlpatterns += staticfiles_urlpatterns()
 def startup_news_updater():
     from news.tasks import start_scheduler
     start_scheduler()
-
-    from news.news_scraper import update_news
-    update_news()
 
 startup_news_updater()
 

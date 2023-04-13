@@ -16,6 +16,8 @@ def start_scheduler():
     def scheduler():
         # Schedule update_news every 4 hours
         schedule.every(4).hours.do(update_news)
+        with lock:
+            update_news()
 
         while True:
             with lock:
