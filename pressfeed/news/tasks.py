@@ -4,18 +4,11 @@ import schedule
 import time
 
 lock = threading.Lock()
-scheduler_started = False
 
 def start_scheduler():
-    global scheduler_started
-    if(scheduler_started):
-        return
-
-    scheduler_started = True
-
     def scheduler():
         # Schedule update_news every 4 hours
-        schedule.every(4).hours.do(update_news)
+        schedule.every(10).seconds.do(update_news)
         with lock:
             update_news()
 
