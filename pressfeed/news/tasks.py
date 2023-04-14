@@ -8,7 +8,7 @@ lock = threading.Lock()
 def start_scheduler():
     def scheduler():
         # Schedule update_news every 4 hours
-        schedule.every(10).seconds.do(update_news)
+        schedule.every(4).hours.do(update_news)
         with lock:
             update_news()
 
