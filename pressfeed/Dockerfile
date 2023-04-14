@@ -23,5 +23,5 @@ COPY . /code/
 EXPOSE 8000
 
 # replace demo.wsgi with <project_name>.wsgi
-CMD ["daphne", "pressfeed.asgi:application", "-b", "0.0.0.0", "-p", "8000", "-w", "2"]
+CMD ["daphne", "pressfeed.asgi:application", "--bind", "0.0.0.0", "-p", "8000"]
 
