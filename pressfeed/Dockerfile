@@ -12,6 +12,7 @@ WORKDIR /code
 COPY requirements.txt /tmp/requirements.txt
 
 RUN set -ex && \
+    apt-get update && apt-get install -y build-essential
     pip install --upgrade pip && \
     pip install -r /tmp/requirements.txt && \
     rm -rf /root/.cache/
@@ -23,4 +24,5 @@ COPY . /code/
 EXPOSE 8000
 
 # replace demo.wsgi with <project_name>.wsgi
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "pressfeed.wsgi"]
+CMD ["daphne", "pressfeed.asgi:application", "-b", "0.0.0.0", "-p", "8000", "-w", "2"]
+
