@@ -55,6 +55,19 @@ def account(request):
 
 
 @login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ("Password updated!"))
+            return redirect('login')
+    else:
+        form = ChangePasswordForm(request.user)
+    return render(request, 'accounts/password.html', {'form': form})
+
+
+@login_required
 def logout_user(request):
     logout(request)
     messages.success(request, ("You logged out successfully"))

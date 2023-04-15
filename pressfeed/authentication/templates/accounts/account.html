@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row d-flex justify-content-center">
+<div class="row d-flex justify-content-center" id="acc-rows">
     <h2 style="text-align: center">{{ user.username }}'s account</h2>
 </div>
 <br/>
-<div class="row d-flex justify-content-center">
-    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded">
-        <h3>Change username:</h3>
+<div class="row d-flex justify-content-center" id="acc-rows">
+    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded" id="acc-cols">
+        <h4>Change username:</h4>
         <br/>
         <form method="post">
             {% csrf_token %}
@@ -15,14 +15,18 @@
             {{ form.username }}
 
             <br/>
-            <button type="submit" class="btn">Save</button>
+            <button type="submit" class="btn mt-auto">Save</button>
         </form>
     </div>
-    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded">
-        <h3 style="margin-right: 10px">Delete Account?</h3>
+    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded" id="acc-cols">
+        <h4>Need to change password?</h4>
+        <button class="btn mt-auto" id="get-started-btn"><a href="/change-password">Change password</a></button>
+    </div>
+    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded" id="acc-cols">
+        <h4 style="margin-right: 10px">Delete Account?</h4>
         <form id="delete-form" method="post" action="{% url 'delete_account' %}">
             {% csrf_token %}
-            <button type="submit" class="btn" id="delete-account-btn">Delete Account</button>
+            <button type="submit" class="btn mt-auto" id="delete-account-btn">Delete Account</button>
         </form>
     </div>
 </div>

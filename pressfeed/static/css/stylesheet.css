@@ -74,10 +74,22 @@ a {
     color: white;
     text-decoration: none;
 }
+
 /* login / register headers */
 
 #login-header, #register-header {
     text-align: center;
+}
+
+/* account */
+
+#acc-rows {
+    display: flex;
+    justify-content: space-between;
+}
+
+#acc-cols {
+    flex-basis: 31%;
 }
 
 /* homepage */
