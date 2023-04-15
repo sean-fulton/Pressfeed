@@ -1,25 +1,25 @@
 ARG PYTHON_VERSION=3.10-slim-buster
 
-FROM python:${PYTHON_VERSION}
+# Use the official Python image as a parent image
+FROM python:3.10
 
-ENV PYTHONDONTWRITEBYTECODE 1
+# Set environment variables
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
-RUN mkdir -p /code
+# Set the working directory to /app
+WORKDIR /app
 
-WORKDIR /code
+# Copy the requirements file into the container at /app
+COPY requirements.txt /app/
 
-COPY requirements.txt /tmp/requirements.txt
+# Install any dependencies specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN set -ex && \
-    pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt && \
-    rm -rf /root/.cache/ \
+# Copy the rest of the application code into the container at /app
+COPY . /app/
 
-COPY . /code/
-
-# RUN python manage.py collectstatic --noinput
-
+# Expose the port that the Django app will run on
 EXPOSE 8000
 
 # replace demo.wsgi with <project_name>.wsgi
