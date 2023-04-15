@@ -9,17 +9,27 @@
 </div>
 {% endif %}
 
-<h2 id="register-header">Register a Pressfeed account!</h2>
-<br/>
+<div class="d-flex justify-content-center">
+    <div class="col-lg-5 shadow p-4 mb-5 bg-body rounded">
+        <h2 id="register-header">Register a Pressfeed account!</h2>
+        <br/>
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <p>Choose a username:</p>
+            {{ form.username }}
+            <br/>
 
-<div class="col-sm-3 shadow p-4 mb-5 bg-body rounded">
-    <form action="{% url 'register' %}" method="POST">
-        {% csrf_token %}
+            <p>Create a password:</p>
+            {{ form.password1 }}
+            <br/>
 
-        {{ form.as_p }}
+            <p>Confirm your password:</p>
+            {{ form.password2 }}
+            <br/>
 
-        <input type="submit" value="Submit" class="btn">
-    </form>
+            <input type="submit" value="Submit" class="btn">
+        </form>
+    </div>
 </div>
 
 {% endblock %}

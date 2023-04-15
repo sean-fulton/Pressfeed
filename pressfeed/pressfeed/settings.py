@@ -4,7 +4,6 @@ Django settings for pressfeed project.
 """
 
 from pathlib import Path
-
 import dj_database_url
 import django.db
 import environ
@@ -125,6 +124,9 @@ STATIC_URL = 'static/'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+
+
+AUTH_USER_MODEL = 'authentication.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

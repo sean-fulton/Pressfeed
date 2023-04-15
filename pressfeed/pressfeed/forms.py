@@ -1,17 +1,15 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth import get_user_model
 from django.forms.widgets import CheckboxSelectMultiple
 from news.models import Source
 from django import forms
 
-class RegisterUserForm(UserCreationForm):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+User = get_user_model()
 
+class RegisterUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name')
+        fields = ('username', 'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super(RegisterUserForm, self).__init__(*args, **kwargs)
@@ -41,3 +39,10 @@ class SubscriptionForm(forms.Form):
                 selected_sources = selected_sources.exclude(pk=source.source.pk)
             for source in selected_sources:
                 UserSource.objects.create(user=self.user, source=source)
+
+class UserEditForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
+

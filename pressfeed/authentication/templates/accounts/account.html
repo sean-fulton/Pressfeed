@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+    <div class="col-sm-3">
+        <h1>Account Details</h1>
+        <br/>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">Save</button>
+            <button type="button" class="btn" onclick="document.getElementById('delete-form').submit()">Delete Account
+            </button>
+        </form>
+        <form id="delete-form" method="post" action="{% url 'delete_account' %}" style="display: none">
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}
