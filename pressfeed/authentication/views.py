@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
-from pressfeed.forms import RegisterUserForm, UserEditForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from pressfeed.forms import RegisterUserForm, UsernameEditForm, ChangePasswordForm
 from django.contrib import messages
 import requests
 
@@ -44,17 +44,13 @@ def login_user(request):
 @login_required
 def account(request):
     if request.method == 'POST':
-        form = UserEditForm(request.POST, instance=request.user)
+        form = UsernameEditForm(request.POST, instance=request.user)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.username = form.cleaned_data['username']
-            user.set_password(form.cleaned_data['password'])
-            user.save()
-            messages.success(request, 'Your account has been updated!')
-            update_session_auth_hash(request, user)
-            return redirect('accounts/account')
+            form.save()
+            messages.success(request, ("Updated username!"))
+            return redirect('account')
     else:
-        form = UserEditForm(instance=request.user)
+        form = UsernameEditForm(instance=request.user)
     return render(request, 'accounts/account.html', {'form': form})
 
 

@@ -1,21 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="d-flex justify-content-center">
-    <div class="col-sm-3">
-        <h1>Account Details</h1>
+<div class="row d-flex justify-content-center">
+    <h2 style="text-align: center">{{ user.username }}'s account</h2>
+</div>
+<br/>
+<div class="row d-flex justify-content-center">
+    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded">
+        <h3>Change username:</h3>
         <br/>
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            <p>Edit username:</p>
+            {{ form.username }}
+
+            <br/>
             <button type="submit" class="btn">Save</button>
-            <button type="button" class="btn" onclick="document.getElementById('delete-form').submit()">Delete Account
-            </button>
         </form>
-        <form id="delete-form" method="post" action="{% url 'delete_account' %}" style="display: none">
+    </div>
+    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded">
+        <h3 style="margin-right: 10px">Delete Account?</h3>
+        <form id="delete-form" method="post" action="{% url 'delete_account' %}">
             {% csrf_token %}
+            <button type="submit" class="btn" id="delete-account-btn">Delete Account</button>
         </form>
     </div>
 </div>
-
 {% endblock %}
