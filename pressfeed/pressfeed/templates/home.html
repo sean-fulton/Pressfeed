@@ -23,7 +23,11 @@
         <h1> Direct Messaging </h1>
         <br/>
         <h4>Start sharing articles and chatting with other Pressfeed users. </h4>
-        <button class="btn" id="get-started-btn"><a href="/register">Get Started!</a></button>
+        {% if user.is_authenticated %}
+            <button class="btn" id="get-started-btn" onclick="window.location.href='{% url 'newsfeed' %}'">Go to your feed!</button>
+        {% else %}
+            <button class="btn" id="get-started-btn" onclick="window.location.href='{% url 'register' %}'">Get Started!</button>
+        {% endif %}
     </div>
 </div>
 <br/>

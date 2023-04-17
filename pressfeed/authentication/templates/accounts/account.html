@@ -19,15 +19,16 @@
     </div>
     <div class="col-lg-4 shadow p-4 mb-5 bg-body rounded d-flex flex-column">
         <h4>Need to change password?</h4>
-        <div class="col-sm-12 my-auto">
-            <button class="btn" id="get-started-btn"><a href="/change-password">Change password</a></button>
+        <div class="col-sm-5 my-auto">
+            <button class="btn" id="get-started-btn" onclick="window.location.href='{% url 'change_password' %}'">Change password</button>
         </div>
     </div>
     <div class="col-lg-4 shadow p-4 mb-5 bg-body rounded d-flex flex-column">
         <h4>Delete Account?</h4>
         <form class="my-auto" id="delete-form" method="post" action="{% url 'delete_account' %}">
             {% csrf_token %}
-            <button type="submit" class="btn" id="delete-account-btn" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+            <button type="submit" class="btn" id="delete-account-btn"
+                onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
         </form>
     </div>
 </div>
