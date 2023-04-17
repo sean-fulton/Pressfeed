@@ -22,7 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+if os.environ.get('FLY_APP_NAME'):
+    DEBUG = False
+else:
+    DEBUG = True
 
 INTERNAL_IPS = ['127.0.0.1']
 ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(' ')
