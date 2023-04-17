@@ -1,33 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row d-flex justify-content-center" id="acc-rows">
-    <h2 style="text-align: center">{{ user.username }}'s account</h2>
+<div class="row">
+    <h1 class="text-center">{{ user.username }}'s account</h1>
 </div>
-<br/>
-<div class="row d-flex justify-content-center" id="acc-rows">
-    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded" id="acc-cols">
+<div class="row">
+    <div class="col-lg-4 shadow p-4 mb-5 bg-body rounded">
         <h4>Change username:</h4>
-        <br/>
+        <br />
         <form method="post">
             {% csrf_token %}
             <p>Edit username:</p>
             {{ form.username }}
 
-            <br/>
+            <br />
             <button type="submit" class="btn mt-auto">Save</button>
         </form>
     </div>
-    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded" id="acc-cols">
+    <div class="col-lg-4 shadow p-4 mb-5 bg-body rounded d-flex flex-column">
         <h4>Need to change password?</h4>
-        <button class="btn mt-auto" id="get-started-btn"><a href="/change-password">Change password</a></button>
+        <div class="col-sm-12 my-auto">
+            <button class="btn" id="get-started-btn"><a href="/change-password">Change password</a></button>
+        </div>
     </div>
-    <div class="col-lg-3 shadow p-4 mb-5 bg-body rounded" id="acc-cols">
-        <h4 style="margin-right: 10px">Delete Account?</h4>
-        <form id="delete-form" method="post" action="{% url 'delete_account' %}">
+    <div class="col-lg-4 shadow p-4 mb-5 bg-body rounded d-flex flex-column">
+        <h4>Delete Account?</h4>
+        <form class="my-auto" id="delete-form" method="post" action="{% url 'delete_account' %}">
             {% csrf_token %}
-            <button type="submit" class="btn mt-auto" id="delete-account-btn">Delete Account</button>
+            <button type="submit" class="btn" id="delete-account-btn" onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
         </form>
     </div>
 </div>
+
 {% endblock %}
