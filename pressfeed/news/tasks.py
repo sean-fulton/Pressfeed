@@ -7,8 +7,10 @@ lock = threading.Lock()
 
 def start_scheduler():
     def scheduler():
+        time.sleep(10)
         # Schedule update_news every 4 hours
         schedule.every(4).hours.do(update_news)
+        update_news()
         while True:
             with lock:
                 schedule.run_pending()
