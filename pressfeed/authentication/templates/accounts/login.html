@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 id="login-header">Login to your Pressfeed account</h2>
-
-<br/>
 <div class="d-flex justify-content-center">
-    <div class="col-sm-3 shadow p-4 mb-5 bg-body rounded" id="login-form">
+    <div class="col-lg-5 shadow p-4 mb-5 bg-body rounded" id="login-form">
+        <h2 id="login-header">Login to your Pressfeed account</h2>
+        <br/>
         <form action="" method="POST">
             {% csrf_token %}
             <div class="mb-3">
@@ -21,7 +20,7 @@
                 <input type="checkbox" class="form-check-input" name="">
                 <label class="form-check-label" for="exampleCheck1">Remember me</label>
             </div>
-            <input type="submit" value="Submit" class="btn">
+            <input type="submit" value="Login" class="btn">
         </form>
     </div>
 </div>
