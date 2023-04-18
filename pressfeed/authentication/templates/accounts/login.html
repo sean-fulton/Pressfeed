@@ -8,17 +8,17 @@
         <form action="" method="POST">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="exampleInputUsername1" class="form-label">Username</label>
+                <label class="form-label">Username</label>
                 <input type="username" class="form-control" name="username" aria-describedby="emailHelp">
                 <div id="usernameHelp" class="form-text">We'll never share your details with anyone else.</div>
             </div>
             <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <label class="form-label">Password</label>
                 <input type="password" class="form-control" name="password">
             </div>
             <div class="mb-3 form-check">
                 <input type="checkbox" class="form-check-input" name="">
-                <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                <label class="form-check-label">Remember me</label>
             </div>
             <input type="submit" value="Login" class="btn">
         </form>
