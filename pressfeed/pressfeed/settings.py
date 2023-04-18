@@ -4,8 +4,6 @@ Django settings for pressfeed project.
 """
 
 from pathlib import Path
-import dj_database_url
-import django.db
 import environ
 import os
 

@@ -48,5 +48,5 @@ class Comment(models.Model):
         self.text = text
         self.modified_at = timezone.now()
 
-    def delete(self):
-        self.delete()
+    def delete(self, *args, **kwargs):
+        super(Comment, self).delete(*args, **kwargs)

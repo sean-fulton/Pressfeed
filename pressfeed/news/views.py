@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Article, Source
-from pressfeed.forms import SubscriptionForm
+from .models import Article, Source, Comment
+from pressfeed.forms import CommentForm
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 import environ
-import requests
-import json
-import time
 
 env = environ.Env()
 environ.Env.read_env()
@@ -55,3 +54,35 @@ def newsfeed(request):
     articles = Article.objects.filter(source__in=sources).order_by('-published_at')
     return render(request, 'newsfeed.html', {'articles': articles})
 
+@login_required
+def article_view(request, pk):
+     article = Article.objects.get(id=pk)
+     comments = Comment.objects.filter(article=article)
+     form = CommentForm(request.POST or None)
+
+     if request.method == 'POST':
+          if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = article
+            comment.user = request.user
+            comment.save()
+            form = CommentForm()
+
+     context = {
+          'article': article,
+          'comments': comments,
+          'form': form,
+     }
+
+     return render(request, 'article.html', context)
+
+@login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, id=pk)
+
+    if comment.user == request.user:
+        comment.delete()
+    return redirect(reverse_lazy('article-view', args=[comment.article.id]))
+
+
+    

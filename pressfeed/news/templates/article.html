@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <img class="card-img-top" src="{{ article.thumbnail_url }}" style="height: 150px; object-fit: cover;" onerror="this.onerror=null; this.src='{% static 'img/err-splash.jpg' %}'">
+                    <h2 class="card-title">{{ article.title }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ article.source }}</h6>
+                    <p class="card-text">{{ article.description }}</p>
+                    <a href="{{ article.url }}" class="btn" target="_blank">Read more</a>
+                    <a href="/feed" class="btn text-center">Back to feed</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ <div class="row d-flex justify-content-center">
+        <div class="col-md-6 shadow p-4 mb-5 bg-body rounded">
+             <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn">Comment</button>
+            </form>
+            <br/>
+        </div>
+</div>
+<div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+        <h3>Comments</h3>
+        <br/>
+        {% for comment in comments %}
+            <div class="card mb-3 shadow p-4 mb-5 bg-body rounded">
+                <div class="card-body">
+                    <p class="card-text">{{ comment.text }}</p>
+                    <p class="card-subtitle mb-2 text-muted">- <strong>{{ comment.user }}</strong> @ {{ comment.modified_at }}</p>
+                </div>
+                {% if request.user == comment.user %}
+                    <form action="{% url 'delete-comment' pk=comment.pk %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn" style="margin-bottom: 5px; margin-left: 5px" type="submit">Delete</button>
+                    </form>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div> 
+{% endblock %}
