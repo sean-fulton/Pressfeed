@@ -26,8 +26,5 @@ urlpatterns += staticfiles_urlpatterns()
 def startup_news_updater():
     from news.tasks import start_scheduler
     start_scheduler()
-
-
-#begin scheduler if deployment environment is running app
-if os.environ.get('FLY_APP_NAME'):
-    startup_news_updater()
+    
+startup_news_updater()
