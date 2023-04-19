@@ -18,16 +18,15 @@ def subscribe(request):
     if request.method == 'POST':
         for source in sources:
             if source.name in request.POST:
-                # If source is checked and user is not subscribed, subscribe user
                 print(request.POST.get(source.name))
                 if request.POST.get(source.name) == 'on':
                     source.subscribers.add(request.user)
-                # If source is unchecked and user is subscribed, unsubscribe user
+
             elif request.POST.get(source.name) == None:
                     source.subscribers.remove(request.user)
 
         messages.success(request, "You have updated your subscriptions!")
-        return redirect('subscribe')
+        return redirect(reverse_lazy('subscribe'))
 
     # If no form submitted, show user's subscribed sources
     user_sources = request.user.sources.all()
@@ -67,6 +66,7 @@ def article_view(request, pk):
             comment.user = request.user
             comment.save()
             form = CommentForm()
+            return redirect(reverse_lazy('article-view', args=[pk]))
 
      context = {
           'article': article,

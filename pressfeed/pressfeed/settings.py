@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'pressfeed',
     'news',
     'authentication',
-    'channels',
 ]
 
 MIDDLEWARE = [
@@ -71,8 +70,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'pressfeed.wsgi.application'
-ASGI_APPLICATION = 'pressfeed.asgi.application'
+WSGI_APPLICATION = 'pressfeed.wsgi.application'
+# ASGI_APPLICATION = 'pressfeed.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

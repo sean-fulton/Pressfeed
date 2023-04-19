@@ -23,5 +23,5 @@ COPY . /app/
 EXPOSE 8000
 
 # replace demo.wsgi with <project_name>.wsgi
-CMD ["daphne", "pressfeed.asgi:application", "--bind", "0.0.0.0", "-p", "8000"]
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "pressfeed.wsgi"]
 
