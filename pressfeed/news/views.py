@@ -85,4 +85,21 @@ def delete_comment(request, pk):
     return redirect(reverse_lazy('article-view', args=[comment.article.id]))
 
 
+@login_required
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, id=pk)
+    
+    if comment.user == request.user:
+        if request.method == 'POST':
+            form = CommentForm(request.POST, instance=comment)
+            if form.is_valid():
+                form.save()
+                return redirect(reverse_lazy('article-view', args=[comment.article.id]))
+        else:
+            form = CommentForm(instance=comment)
+            return render(request, 'article.html', {'article': comment.article, 'form': form})
+    else:
+        return redirect(reverse_lazy('article-view', args=[comment.article.id]))
+
+
     

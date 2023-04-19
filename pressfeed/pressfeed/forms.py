@@ -82,9 +82,3 @@ class CommentForm(forms.ModelForm):
 
         self.fields['text'].widget.attrs['class'] = "form-control"
         self.fields['text'].widget.attrs['style'] = "resize: none;"
-
-
-
-
-
-
