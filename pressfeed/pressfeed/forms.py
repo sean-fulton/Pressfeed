@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
-from django.forms.widgets import CheckboxSelectMultiple
-from news.models import Source
+from news.models import Source, Comment
 from django import forms
+from django.forms import ModelForm
 
 User = get_user_model()
 
@@ -65,7 +65,20 @@ class ChangePasswordForm(PasswordChangeForm):
         self.fields['new_password1'].widget.attrs['class'] = "form-control"
         self.fields['new_password2'].widget.attrs['class'] = "form-control"
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {
+            'text': forms.Textarea(attrs={'rows': 4}),
+        }
 
+        labels = {
+            'text': 'Write a comment here:',
+        }
 
+    def __init__(self, *args, **kwargs):
+        super(ModelForm, self).__init__(*args, **kwargs)
 
-
+        self.fields['text'].widget.attrs['class'] = "form-control"
+        self.fields['text'].widget.attrs['style'] = "resize: none;"

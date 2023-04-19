@@ -75,6 +75,14 @@ a {
     text-decoration: none;
 }
 
+/* article full view */
+
+#edit-comment-btn {
+    width: 60px; 
+    height: 38px; 
+    margin-right: 10px;
+}
+
 /* login / register headers */
 
 #login-header, #register-header {

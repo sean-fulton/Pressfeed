@@ -1,5 +1,4 @@
 import requests
-import json
 import environ
 from .models import Source
 from .models import Article
@@ -38,14 +37,13 @@ def retrieve_news(country):
 def store_news(news_data):
     if news_data is not None and 'articles' in news_data:
         for article in news_data['articles']:
-            if (article['title'] is not None) and (article['description'] is not None) and (article['url'] is not None):
+            if (article['title'] is not None) and (article['url'] is not None) and (article['source']['id'] != "google-news"):
                 try:
-
                     source, created = Source.objects.get_or_create(
                         name=article['source']['name']
                     )
 
-                    article_obj, created = Article.objects.get_or_create(
+                    retrieved_article, created = Article.objects.get_or_create(
                         title=article['title'],
                         description=article['description'],
                         url=article['url'],
@@ -53,6 +51,7 @@ def store_news(news_data):
                         source=source,
                         thumbnail_url=article['urlToImage']
                     )
+
                 except IntegrityError:
                     # Ignore duplicate article entries
                     pass

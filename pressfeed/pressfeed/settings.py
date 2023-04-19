@@ -4,8 +4,6 @@ Django settings for pressfeed project.
 """
 
 from pathlib import Path
-import dj_database_url
-import django.db
 import environ
 import os
 
@@ -41,7 +39,6 @@ INSTALLED_APPS = [
     'pressfeed',
     'news',
     'authentication',
-    'channels',
 ]
 
 MIDDLEWARE = [
@@ -73,8 +70,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = 'pressfeed.wsgi.application'
-ASGI_APPLICATION = 'pressfeed.asgi.application'
+WSGI_APPLICATION = 'pressfeed.wsgi.application'
+# ASGI_APPLICATION = 'pressfeed.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

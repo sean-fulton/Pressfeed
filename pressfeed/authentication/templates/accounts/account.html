@@ -4,32 +4,37 @@
 <div class="row">
     <h1 class="text-center">{{ user.username }}'s account</h1>
 </div>
-<div class="row">
-    <div class="col-lg-4 shadow p-4 mb-5 bg-body rounded">
-        <h4>Change username:</h4>
-        <br />
-        <form method="post">
-            {% csrf_token %}
-            <p>Edit username:</p>
-            {{ form.username }}
-
+<br/>
+<div class="container d-flex justify-content-center">
+    <div class="col-lg-5">
+        <div class="row-lg-4 shadow p-4 mb-5 bg-body rounded justify-content-center">
+            <h4>Change username:</h4>
             <br />
-            <button type="submit" class="btn mt-auto">Save</button>
-        </form>
-    </div>
-    <div class="col-lg-4 shadow p-4 mb-5 bg-body rounded d-flex flex-column">
-        <h4>Need to change password?</h4>
-        <div class="col-sm-5 my-auto">
-            <button class="btn" id="get-started-btn" onclick="window.location.href='{% url 'change_password' %}'">Change password</button>
+            <form method="post">
+                {% csrf_token %}
+                <p>Edit username:</p>
+                {{ form.username }}
+                <br/>
+                <p>Enter your password:</p>
+                <input type="password" class="form-control" name="conf-password">
+                <br />
+                <button type="submit" class="btn mt-auto">Save</button>
+            </form>
         </div>
-    </div>
-    <div class="col-lg-4 shadow p-4 mb-5 bg-body rounded d-flex flex-column">
-        <h4>Delete Account?</h4>
-        <form class="my-auto" id="delete-form" method="post" action="{% url 'delete_account' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn" id="delete-account-btn"
-                onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
-        </form>
+        <div class="row-lg-4 shadow p-4 mb-5 bg-body rounded d-flex flex-column">
+            <h4>Need to change password?</h4>
+            <div class="col-sm-5 my-auto">
+                <button class="btn" id="get-started-btn" onclick="window.location.href='{% url 'change_password' %}'">Change password</button>
+            </div>
+        </div>
+        <div class="row-lg-4 shadow p-4 mb-5 bg-body rounded d-flex flex-column">
+            <h4>Delete Account?</h4>
+            <form class="my-auto" id="delete-form" method="post" action="{% url 'delete_account' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn" id="delete-account-btn"
+                    onclick="return confirm('Are you sure you want to delete your account?')">Delete Account</button>
+            </form>
+        </div>
     </div>
 </div>
 

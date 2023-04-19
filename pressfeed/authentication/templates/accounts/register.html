@@ -3,9 +3,15 @@
 {% block content %}
 
 {% if form.errors %}
-<div class="alert alert-warning alert-dismissible fade show col-sm-3" role="alert">
-    There was an error registering your account!
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="row d-flex justify-content-center">
+    <div class="alert alert-warning alert-dismissible fade show col-lg-4" role="alert">
+        There was an error registering your account!
+
+        {% for message in form.errors.values %}
+            {{ message }}
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 </div>
 {% endif %}
 
@@ -21,6 +27,7 @@
 
             <p>Create a password:</p>
             {{ form.password1 }}
+            {{ form. }}
             <br/>
 
             <p>Confirm your password:</p>
