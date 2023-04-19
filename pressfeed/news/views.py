@@ -77,15 +77,6 @@ def article_view(request, pk):
      return render(request, 'article.html', context)
 
 @login_required
-def delete_comment(request, pk):
-    comment = get_object_or_404(Comment, id=pk)
-
-    if comment.user == request.user:
-        comment.delete()
-    return redirect(reverse_lazy('article-view', args=[comment.article.id]))
-
-
-@login_required
 def edit_comment(request, pk):
     comment = get_object_or_404(Comment, id=pk)
     
@@ -97,7 +88,20 @@ def edit_comment(request, pk):
                 return redirect(reverse_lazy('article-view', args=[comment.article.id]))
         else:
             form = CommentForm(instance=comment)
-            return render(request, 'article.html', {'article': comment.article, 'form': form})
+        return redirect(reverse_lazy('edit-comment', args=[pk]))
+    else:
+        return redirect(reverse_lazy('article-view', args=[comment.article.id]))
+
+
+@login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, id=pk)
+
+    if comment.user == request.user:
+        if request.method == 'POST':
+            comment.delete()
+            return redirect(reverse_lazy('article-view', args=[comment.article.id]))
+        return redirect(reverse_lazy('delete-comment', args=[pk]))
     else:
         return redirect(reverse_lazy('article-view', args=[comment.article.id]))
 
