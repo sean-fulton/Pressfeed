@@ -12,6 +12,7 @@
                     <h2 class="card-title">{{ article.title }}</h2>
                     <h6 class="card-subtitle mb-2 text-muted">{{ article.source }}</h6>
                     <p class="card-text">{{ article.description }}</p>
+                    <p><i class="fa-sharp fa-solid fa-comments"></i> {{ article.get_comment_count }}</p>
                     <a href="{{ article.url }}" class="btn" target="_blank">Read more</a>
                     <a href="/feed" class="btn text-center">Back to feed</a>
                 </div>
@@ -45,7 +46,7 @@
                     <textarea name="text" id="comment-{{ comment.id }}-text" class="form-control" rows="4" Required=True>{{ comment.text }}</textarea>
                     <br/>
                     <button type="submit" class="btn"><i class="fa-sharp fa-solid fa-check"></i></button>
-                    <button type="button" class="btn" onclick="hideForm({{ comment.id }})"><i class="fa-sharp fa-solid fa-xmark"></i></i></button>
+                    <button type="button" class="btn" onclick="hideForm({{ comment.id }})"><i class="fa-sharp fa-solid fa-xmark"></i></button>
                 </form>
                 <div style="display: flex;">
                     <button type="button" class="btn" id="edit-comment-btn" onclick="editComment({{ comment.id }})" >Edit</button>
