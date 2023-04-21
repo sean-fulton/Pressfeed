@@ -25,4 +25,4 @@ def startup_news_updater():
     from news.tasks import start_scheduler
     start_scheduler()
     
-# startup_news_updater()
+startup_news_updater()

@@ -19,7 +19,6 @@ def subscribe(request):
     if request.method == 'POST':
         for source in sources:
             if source.name in request.POST:
-                print(request.POST.get(source.name))
                 if request.POST.get(source.name) == 'on':
                     source.subscribers.add(request.user)
 
@@ -57,14 +56,21 @@ def newsfeed(request):
 
     page = request.GET.get('page')
     articles = paginator.get_page(page)
+
+    for article in articles:
+        article.has_liked = article.likes.filter(user=user).exists()
+        article.has_disliked = article.dislikes.filter(user=user).exists()
     
     return render(request, 'newsfeed.html', {'articles': articles})
 
 @login_required
 def article_view(request, pk):
+     user = request.user
      article = Article.objects.get(id=pk)
      comments = Comment.objects.filter(article=article)
      comment_form = CommentForm(request.POST or None)
+     article.has_liked = article.likes.filter(user=user).exists()
+     article.has_disliked = article.dislikes.filter(user=user).exists()
 
      if request.method == 'POST':
           if comment_form.is_valid():
@@ -113,7 +119,7 @@ def delete_comment(request, pk):
         return redirect(reverse_lazy('article-view', args=[comment.article.id]))
 
 @login_required
-def like_article(request, pk):
+def like_article(request, pk, view):
     article = get_object_or_404(Article, pk=pk)
     user = request.user
     like = Like.objects.filter(user=user, article=article).first()
@@ -128,10 +134,13 @@ def like_article(request, pk):
         if dislike:
             dislike.delete()
 
-    return redirect(reverse_lazy('newsfeed'))
+    if (view == 'article-view'):
+        return redirect(reverse_lazy(view, args=[pk]))
+    else:
+        return redirect(reverse_lazy(view))
 
 
-def dislike_article(request, pk):
+def dislike_article(request, pk, view):
     article = get_object_or_404(Article, pk=pk)
     user = request.user
     dislike = Dislike.objects.filter(user=user, article=article).first()
@@ -145,6 +154,10 @@ def dislike_article(request, pk):
         like = Like.objects.filter(user=user, article=article).first()
         if like:
             like.delete()
-    return redirect(reverse_lazy('newsfeed'))
+      
+    if (view == 'article-view'):
+        return redirect(reverse_lazy(view, args=[pk]))
+    else:
+        return redirect(reverse_lazy(view))
 
     

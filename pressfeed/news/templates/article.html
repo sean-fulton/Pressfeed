@@ -19,6 +19,17 @@
                     </div>
                     <a href="{{ article.url }}" class="btn" target="_blank">Read more</a>
                     <a href="/feed" class="btn text-center">Back to feed</a>
+                    {% if article.has_liked %}
+                        <a href="{% url 'like-article' article.id 'article-view'%}" class="btn"><i class="fa-solid fa-thumbs-up"></i></a>
+                    {% else %}
+                        <a href="{% url 'like-article' article.id 'article-view'%}" class="btn"><i class="fa-regular fa-thumbs-up"></i></a>
+                    {% endif %}
+
+                    {% if article.has_disliked %}
+                        <a href="{% url 'dislike-article' article.id 'article-view'%}" class="btn"><i class="fa-solid fa-thumbs-down"></i></a>
+                    {% else %}
+                        <a href="{% url 'dislike-article' article.id 'article-view'%}" class="btn"><i class="fa-regular fa-thumbs-down"></i></a>
+                    {% endif %}
                 </div>
             </div>
         </div>

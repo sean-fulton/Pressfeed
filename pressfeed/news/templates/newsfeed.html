@@ -23,8 +23,17 @@
                     <p class="mt-auto" id="article-date"> {{ article.published_at }} </p>
                     <div class="mt-auto">
                         <a href="{{ article.url }}" target="_blank" type="button" class="btn" >Read more</a>
-                        <a href="{% url 'like-article' article.id %}" class="btn"><i class="fa-regular fa-thumbs-up"></i></a>
-                        <a href="{% url 'dislike-article' article.id %}" class="btn"><i class="fa-regular fa-thumbs-down"></i></a>
+                        {% if article.has_liked %}
+                            <a href="{% url 'like-article' article.id 'newsfeed'%}" class="btn"><i class="fa-solid fa-thumbs-up"></i></a>
+                        {% else %}
+                            <a href="{% url 'like-article' article.id 'newsfeed'%}" class="btn"><i class="fa-regular fa-thumbs-up"></i></a>
+                        {% endif %}
+
+                        {% if article.has_disliked %}
+                            <a href="{% url 'dislike-article' article.id 'newsfeed'%}" class="btn"><i class="fa-solid fa-thumbs-down"></i></a>
+                        {% else %}
+                            <a href="{% url 'dislike-article' article.id 'newsfeed'%}" class="btn"><i class="fa-regular fa-thumbs-down"></i></a>
+                        {% endif %}
                         <a href="{% url 'article-view' pk=article.pk %}" type="button" class="btn"><i class="fa-sharp fa-solid fa-comments"></i></a>
                     </div>
                 </div>
