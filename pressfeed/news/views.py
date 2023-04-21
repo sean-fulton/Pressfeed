@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Article, Source, Comment, Like, Dislike
+from django.core.paginator import Paginator, EmptyPage
 from pressfeed.forms import CommentForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -50,7 +51,13 @@ def testfeed(request):
 def newsfeed(request):
     user = request.user
     sources = user.sources.all()
-    articles = Article.objects.filter(source__in=sources).order_by('-published_at')
+    articles_list = Article.objects.filter(source__in=sources).order_by('-published_at')
+
+    paginator = Paginator(articles_list, 8)
+
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
+    
     return render(request, 'newsfeed.html', {'articles': articles})
 
 @login_required
@@ -121,7 +128,7 @@ def like_article(request, pk):
         if dislike:
             dislike.delete()
 
-    return redirect(reverse_lazy('article-view', args=[pk]))
+    return redirect(reverse_lazy('newsfeed'))
 
 
 def dislike_article(request, pk):
@@ -138,6 +145,6 @@ def dislike_article(request, pk):
         like = Like.objects.filter(user=user, article=article).first()
         if like:
             like.delete()
-    return redirect(reverse_lazy('article-view', args=[pk]))
+    return redirect(reverse_lazy('newsfeed'))
 
     
