@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Article, Source, Comment
+from .models import Article, Source, Comment, Like, Dislike
+from django.core.paginator import Paginator, EmptyPage
 from pressfeed.forms import CommentForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -18,7 +19,6 @@ def subscribe(request):
     if request.method == 'POST':
         for source in sources:
             if source.name in request.POST:
-                print(request.POST.get(source.name))
                 if request.POST.get(source.name) == 'on':
                     source.subscribers.add(request.user)
 
@@ -50,28 +50,41 @@ def testfeed(request):
 def newsfeed(request):
     user = request.user
     sources = user.sources.all()
-    articles = Article.objects.filter(source__in=sources).order_by('-published_at')
+    articles_list = Article.objects.filter(source__in=sources).order_by('-published_at')
+
+    paginator = Paginator(articles_list, 8)
+
+    page = request.GET.get('page')
+    articles = paginator.get_page(page)
+
+    for article in articles:
+        article.has_liked = article.likes.filter(user=user).exists()
+        article.has_disliked = article.dislikes.filter(user=user).exists()
+    
     return render(request, 'newsfeed.html', {'articles': articles})
 
 @login_required
 def article_view(request, pk):
+     user = request.user
      article = Article.objects.get(id=pk)
      comments = Comment.objects.filter(article=article)
-     form = CommentForm(request.POST or None)
+     comment_form = CommentForm(request.POST or None)
+     article.has_liked = article.likes.filter(user=user).exists()
+     article.has_disliked = article.dislikes.filter(user=user).exists()
 
      if request.method == 'POST':
-          if form.is_valid():
-            comment = form.save(commit=False)
+          if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
             comment.article = article
             comment.user = request.user
             comment.save()
-            form = CommentForm()
+            comment_form = CommentForm()
             return redirect(reverse_lazy('article-view', args=[pk]))
 
      context = {
           'article': article,
           'comments': comments,
-          'form': form,
+          'comment_form': comment_form,
      }
 
      return render(request, 'article.html', context)
@@ -105,5 +118,46 @@ def delete_comment(request, pk):
     else:
         return redirect(reverse_lazy('article-view', args=[comment.article.id]))
 
+@login_required
+def like_article(request, pk, view):
+    article = get_object_or_404(Article, pk=pk)
+    user = request.user
+    like = Like.objects.filter(user=user, article=article).first()
+
+    if like:
+        like.delete()
+    else:
+        like = Like(user=user, article=article)
+        like.save()
+
+        dislike = Dislike.objects.filter(user=user, article=article).first()
+        if dislike:
+            dislike.delete()
+
+    if (view == 'article-view'):
+        return redirect(reverse_lazy(view, args=[pk]))
+    else:
+        return redirect(reverse_lazy(view))
+
+
+def dislike_article(request, pk, view):
+    article = get_object_or_404(Article, pk=pk)
+    user = request.user
+    dislike = Dislike.objects.filter(user=user, article=article).first()
+
+    if dislike:
+        dislike.delete()
+    else:
+        dislike = Dislike(user=user, article=article)
+        dislike.save()
+
+        like = Like.objects.filter(user=user, article=article).first()
+        if like:
+            like.delete()
+      
+    if (view == 'article-view'):
+        return redirect(reverse_lazy(view, args=[pk]))
+    else:
+        return redirect(reverse_lazy(view))
 
     

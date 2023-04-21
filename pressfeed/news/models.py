@@ -28,9 +28,14 @@ class Article(models.Model):
     
     def get_comment_count(self):
         return self.comments.count()
+    
+    def get_like_count(self):
+        return self.likes.count()
+    
+    def get_dislike_count(self):
+        return self.dislikes.count()
 
 #Comment model
-
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
@@ -50,3 +55,30 @@ class Comment(models.Model):
 
     def delete(self, *args, **kwargs):
         super(Comment, self).delete(*args, **kwargs)
+    
+#Like model
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='likes')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'article'], name="unique_like")
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} likes {self.article.title}"
+
+
+#Dislike model
+class Dislike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='dislikes')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'article'], name="unique_dislike")
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} dislikes {self.article.title}"

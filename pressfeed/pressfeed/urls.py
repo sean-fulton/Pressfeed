@@ -2,8 +2,6 @@ from django.contrib import admin
 from . import views
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from news.news_scraper import update_news
-import os
 import environ
 import debug_toolbar
 
