@@ -83,6 +83,10 @@ a {
     margin-right: 10px;
 }
 
+#total-comments, #total-likes, #total-dislikes {
+    display: inline-block;
+}
+
 /* login / register headers */
 
 #login-header, #register-header {

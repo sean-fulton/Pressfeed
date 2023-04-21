@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Article, Source, Comment
+from .models import Article, Source, Comment, Like, Dislike
 from pressfeed.forms import CommentForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -57,21 +57,21 @@ def newsfeed(request):
 def article_view(request, pk):
      article = Article.objects.get(id=pk)
      comments = Comment.objects.filter(article=article)
-     form = CommentForm(request.POST or None)
+     comment_form = CommentForm(request.POST or None)
 
      if request.method == 'POST':
-          if form.is_valid():
-            comment = form.save(commit=False)
+          if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
             comment.article = article
             comment.user = request.user
             comment.save()
-            form = CommentForm()
+            comment_form = CommentForm()
             return redirect(reverse_lazy('article-view', args=[pk]))
 
      context = {
           'article': article,
           'comments': comments,
-          'form': form,
+          'comment_form': comment_form,
      }
 
      return render(request, 'article.html', context)
@@ -105,5 +105,39 @@ def delete_comment(request, pk):
     else:
         return redirect(reverse_lazy('article-view', args=[comment.article.id]))
 
+@login_required
+def like_article(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    user = request.user
+    like = Like.objects.filter(user=user, article=article).first()
+
+    if like:
+        like.delete()
+    else:
+        like = Like(user=user, article=article)
+        like.save()
+
+        dislike = Dislike.objects.filter(user=user, article=article).first()
+        if dislike:
+            dislike.delete()
+
+    return redirect(reverse_lazy('article-view', args=[pk]))
+
+
+def dislike_article(request, pk):
+    article = get_object_or_404(Article, pk=pk)
+    user = request.user
+    dislike = Dislike.objects.filter(user=user, article=article).first()
+
+    if dislike:
+        dislike.delete()
+    else:
+        dislike = Dislike(user=user, article=article)
+        dislike.save()
+
+        like = Like.objects.filter(user=user, article=article).first()
+        if like:
+            like.delete()
+    return redirect(reverse_lazy('article-view', args=[pk]))
 
     

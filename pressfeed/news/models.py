@@ -29,14 +29,13 @@ class Article(models.Model):
     def get_comment_count(self):
         return self.comments.count()
     
-    def get_likes_count(self):
+    def get_like_count(self):
         return self.likes.count()
     
-    def get_dislikes_count(self):
+    def get_dislike_count(self):
         return self.dislikes.count()
 
 #Comment model
-
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
