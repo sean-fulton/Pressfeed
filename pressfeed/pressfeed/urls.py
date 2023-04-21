@@ -2,8 +2,6 @@ from django.contrib import admin
 from . import views
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from news.news_scraper import update_news
-import os
 import environ
 import debug_toolbar
 
@@ -27,4 +25,4 @@ def startup_news_updater():
     from news.tasks import start_scheduler
     start_scheduler()
     
-startup_news_updater()
+# startup_news_updater()
