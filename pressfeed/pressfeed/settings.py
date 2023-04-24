@@ -6,6 +6,7 @@ Django settings for pressfeed project.
 from pathlib import Path
 import environ
 import os
+import sys
 
 env = environ.Env()
 env.read_env()
@@ -77,7 +78,15 @@ WSGI_APPLICATION = 'pressfeed.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-if os.environ.get('GITHUB_WORKFLOW'):
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
+
+elif os.environ.get('GITHUB_WORKFLOW'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -88,18 +97,20 @@ if os.environ.get('GITHUB_WORKFLOW'):
             'PORT': '5432',
         }
     }
+    
 elif os.environ.get('FLY_APP_NAME'):
     # Use Fly.io Postgresql database config
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('FLY_PG_APP_NAME'),
-            'USER': os.getenv('FLY_PG_USERNAME'),
-            'PASSWORD': os.getenv('FLY_PG_PASSWORD'),
-            'HOST': os.getenv('FLY_PG_HOST'),
-            'PORT': os.getenv('FLY_PG_PORT'),
+            'NAME': os.environ.get('FLY_PG_APP_NAME'),
+            'USER': os.environ.get('FLY_PG_USERNAME'),
+            'PASSWORD': os.environ.get('FLY_PG_PASSWORD'),
+            'HOST': os.environ.get('FLY_PG_HOST'),
+            'PORT': os.environ.get('FLY_PG_PORT'),
         }
     }
+
 else:
     DATABASES = {
         'default': {
