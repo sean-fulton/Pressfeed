@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.messages import get_messages
 from django.urls import reverse
 
-# Create your tests here.
+# Testing functionality of authentication e.g user login, registering, accounts, logout, edit accounts
 
 User = get_user_model()
 
